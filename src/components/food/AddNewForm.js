@@ -21,7 +21,7 @@ export const NewFoodForm = () => {
             userId: wasteUserObject.id,
             name: food.name,
             type: food.typeId,
-            expiration: food.name,
+            expiration: food.name
         }
 
 
