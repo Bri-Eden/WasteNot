@@ -27,7 +27,7 @@ export const NewRecipeForm = () => {
 
 
         // TODO: Perform the fetch() to POST the object to the API
-        return fetch(`http://localhost:8088/addrecipe`, {
+        return fetch(`http://localhost:8088/recipes`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -50,7 +50,7 @@ export const NewRecipeForm = () => {
                         required autoFocus
                         type="text"
                         className="form-control"
-                        placeholder="name"
+                        placeholder="Recipe Title"
                         value={recipe.name}
                         onChange={
                             (evt) => {
@@ -100,7 +100,7 @@ export const NewRecipeForm = () => {
             <button
                 onClick={(clickEvent) => handleSaveButtonClick(clickEvent)}
                 className="btn btn-primary">
-                Add To My Pantry
+                Add To My Recipes
             </button>
         </form>
     )

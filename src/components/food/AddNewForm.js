@@ -26,7 +26,7 @@ export const NewFoodForm = () => {
 
 
         // TODO: Perform the fetch() to POST the object to the API
-        return fetch(`http://localhost:8088/addnew`, {
+        return fetch(`http://localhost:8088/foodInventory`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
