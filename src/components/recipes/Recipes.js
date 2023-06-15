@@ -46,7 +46,7 @@ export const RecipesList = () => {
 
         <article className="recipes">
             {
-                //need to look through the arry created by setFiltered in order to see specific tickets per user, which is filteredTickets
+                //need to look through the array created by setFiltered in order to see specific tickets per user, which is filteredTickets
                 filteredRecipe.map(
                     (recipe) => {
                         return <section className="myRecipes">
