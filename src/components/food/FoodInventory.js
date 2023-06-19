@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-export const FoodInventory = () => {
+
+export const FoodInventory = ({ searchTermState }) => {
     const [food, setFood] = useState([])
     const [filteredFood, setFiltered] = useState([])
 
@@ -12,6 +13,14 @@ export const FoodInventory = () => {
     const localWasteUser = localStorage.getItem("user")
     //convert retrieved string to object
     const wasteUserObject = JSON.parse(localWasteUser)
+
+    useEffect(
+        () => {
+            const searchedFood = filteredFood.filter(foods => foods.name.toLowerCase().startsWith(searchTermState.toLowerCase()))
+            setFiltered(searchedFood)
+        },
+        [searchTermState]
+    )
 
     useEffect(
         () => {
@@ -46,11 +55,12 @@ export const FoodInventory = () => {
 
         <article className="foodInventory">
             {
-                //need to look through the arry created by setFiltered in order to see specific tickets per user, which is filteredTickets
+                //need to look through the array created by filtered in order to see specific tickets per user, which is filteredFood
                 filteredFood.map(
                     (food) => {
                         return <section className="myPantry">
                             <header>{food.name}</header>
+
                             <footer>{food.expiration}</footer>
                         </section>
                     }

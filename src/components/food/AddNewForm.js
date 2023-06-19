@@ -1,10 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 export const NewFoodForm = () => {
 
+    const [foodTypes, setType] = useState([])
+
+
     const [food, update] = useState({
         name: "",
+        typeId: 0,
         expiration: ""
     })
 
@@ -20,24 +24,36 @@ export const NewFoodForm = () => {
         const itemToSend = {
             userId: wasteUserObject.id,
             name: food.name,
-            type: food.typeId,
-            expiration: food.name
+            typeId: +food.typeId,
+            expiration: food.expiration
         }
+        itemToSend.userId = wasteUserObject.id;
+        if (wasteUserObject.id !== 0 && food.typeId !== 0 && food.name !== "" && food.expiration !== "")
 
-
-        // TODO: Perform the fetch() to POST the object to the API
-        return fetch(`http://localhost:8088/addnew`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(itemToSend)
-        })
-            .then(response => response.json())
-            .then(() => {
-                navigate("/food")
+            // TODO: Perform the fetch() to POST the object to the API
+            return fetch(`http://localhost:8088/foodInventory`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(itemToSend)
             })
+                .then(response => response.json())
+                .then(() => {
+                    navigate("/food")
+                })
     }
+
+    useEffect(
+        () => {
+            fetch('http://localhost:8088/foodTypes')
+                .then(response => response.json())
+                .then((typeArray) => {
+                    setType(typeArray)
+                })
+        },
+        []
+    )
 
     return (
         <form className="itemForm">
@@ -58,6 +74,28 @@ export const NewFoodForm = () => {
                                 update(copy)
                             }
                         } />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="description">Food Category:</label>
+                    <select
+                        required autoFocus
+                        className="form-control"
+                        placeholder="Food Category"
+                        value={food.typeId}
+                        onChange={
+                            (evt) => {
+                                const copy = { ...food }
+                                copy.typeId = evt.target.value
+                                update(copy)
+                            }
+                        } >
+                        <option value="" defaultValue>Select a Category</option>
+                        {foodTypes.map(item => (
+                            <option value={item.id} key={item.id}>{item.name}</option>
+                        ))}
+                    </select>
                 </div>
             </fieldset>
             <fieldset>
