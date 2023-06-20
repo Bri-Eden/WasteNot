@@ -78,7 +78,7 @@ export const NewFoodForm = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="description">Food Category:</label>
+                    <label htmlFor="category">Food Category:</label>
                     <select
                         required autoFocus
                         className="form-control"
