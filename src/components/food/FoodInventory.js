@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
+import "./FoodInventory.css"
 
 
 export const FoodInventory = ({ searchTermState }) => {
@@ -17,8 +18,14 @@ export const FoodInventory = ({ searchTermState }) => {
 
     useEffect(
         () => {
-            const searchedFood = filteredFood.filter(foods => foods.name.toLowerCase().startsWith(searchTermState.toLowerCase()))
-            setFiltered(searchedFood)
+            if (searchTermState) {
+                const searchedFood = filteredFood.filter(foods => foods.name.toLowerCase().startsWith(searchTermState.toLowerCase()))
+                setFiltered(searchedFood)
+            }
+            else {
+                const myPantry = food.filter(food => food.userId === wasteUserObject.id)
+                setFiltered(myPantry)
+            }
         },
         [searchTermState]
     )
@@ -63,12 +70,13 @@ export const FoodInventory = ({ searchTermState }) => {
                     (food) => {
                         return <> <section className="myPantry">
                             <header>
-                                <Link to={`/food/edit/${food.id}`}> {food.name}</Link>
+                                {food.name}
                             </header>
 
                             <footer>{food.expiration}</footer>
                             <div>
-                                <button onClick={() => navigate(`/food/edit/${foodId}`)}>Edit Item</button>
+                                <Link className="edit-btn" to={`/food/edit/${food.id}`}>Edit Item</Link>
+
                             </div>
                         </section>
                         </>
