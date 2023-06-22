@@ -14,13 +14,28 @@ export const RecipesList = () => {
     //convert retrieved string to object
     const wasteUserObject = JSON.parse(localWasteUser)
 
+
+    const recipeListArray = () => {
+        fetch(`http://localhost:8088/recipes`)
+            .then(response => response.json())
+            .then((recipeArray) => {
+                setRecipe(recipeArray)
+            })// View the initial state of tickets
+    }
+
+    const deleteButton = (recipeId) => {
+        fetch(`http://localhost:8088/recipes/${recipeId}`, {
+            method: "DELETE"
+        })
+            .then(() => {
+                recipeListArray()
+            })
+
+    }
+
     useEffect(
         () => {
-            fetch(`http://localhost:8088/recipes`)
-                .then(response => response.json())
-                .then((recipeArray) => {
-                    setRecipe(recipeArray)
-                })// View the initial state of tickets
+            recipeListArray()
         },
         [] // When this array is empty, you are observing initial component state
     )
@@ -56,6 +71,9 @@ export const RecipesList = () => {
                             <footer>{recipe.instructions}</footer>
                             <div>
                                 <Link className="edit-btn" to={`/recipes/edit/${recipe.id}`}>Edit Item</Link>
+                            </div>
+                            <div>
+                                <button onClick={() => deleteButton(recipe.id)}>Delete Item</button>
                             </div>
                         </section>
                     }

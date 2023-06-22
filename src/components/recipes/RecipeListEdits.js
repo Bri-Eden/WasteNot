@@ -27,7 +27,7 @@ export const RecipeEdit = () => {
 
         if (wasteUserObject.id !== 0 && recipe.userId !== 0 && recipe.name !== "" && recipe.instructions !== "" && recipe.ingredients !== "")
 
-            return fetch(`http://localhost:8088/foodInventory/${recipe.id}`, {
+            return fetch(`http://localhost:8088/recipes/${recipe.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
