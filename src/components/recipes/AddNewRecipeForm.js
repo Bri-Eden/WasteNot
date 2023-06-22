@@ -63,7 +63,7 @@ export const NewRecipeForm = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="expiration">Ingredients:</label>
+                    <label htmlFor="ingredients">Ingredients:</label>
                     <input
                         required autoFocus
                         type="text"
@@ -81,7 +81,7 @@ export const NewRecipeForm = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="expiration">Instructions:</label>
+                    <label htmlFor="instructions">Instructions:</label>
                     <input
                         required autoFocus
                         type="text"
