@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate, Link, useParams } from "react-router-dom"
 
-export const RecipesList = () => {
+export const RecipesList = ({ searchTermState }) => {
     const [recipe, setRecipe] = useState([])
     const [filteredRecipe, setFiltered] = useState([])
     const { recipeId } = useParams()
@@ -32,6 +32,20 @@ export const RecipesList = () => {
             })
 
     }
+
+    useEffect(
+        () => {
+            if (searchTermState) {
+                const searchedRecipes = filteredRecipe.filter(recipes => recipes.name.toLowerCase().startsWith(searchTermState.toLowerCase()))
+                setFiltered(searchedRecipes)
+            }
+            else {
+                const myRecipes = recipe.filter(recipe => recipe.userId === wasteUserObject.id)
+                setFiltered(myRecipes)
+            }
+        },
+        [searchTermState]
+    )
 
     useEffect(
         () => {
