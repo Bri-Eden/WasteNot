@@ -24,30 +24,6 @@ export const FoodInventory = ({ searchTermState }) => {
             })
     }
 
-    const deleteButton = (foodId) => {
-        fetch(`http://localhost:8088/foodInventory/${foodId}`, {
-            method: "DELETE"
-        })
-            .then(() => {
-                foodInventoryArray()
-            })
-
-    }
-
-    useEffect(
-        () => {
-            if (searchTermState) {
-                const searchedFood = filteredFood.filter(foods => foods.name.toLowerCase().startsWith(searchTermState.toLowerCase()))
-                setFiltered(searchedFood)
-            }
-            else {
-                const myPantry = food.filter(food => food.userId === wasteUserObject.id)
-                setFiltered(myPantry)
-            }
-        },
-        [searchTermState]
-    )
-
     useEffect(
         () => {
             foodInventoryArray()
@@ -66,12 +42,45 @@ export const FoodInventory = ({ searchTermState }) => {
         [food] //observe specifically food state
     )
 
-    //add new useEffect to observe inventory state, and sort display for each user based on customer Id on inventory and inventory Id number alignment
+    useEffect(
+        () => {
+            if (searchTermState) {
+                const searchedFood = filteredFood.filter(foods => foods.name.toLowerCase().startsWith(searchTermState.toLowerCase()))
+                setFiltered(searchedFood)
+            }
+            else {
+                const myPantry = food.filter(food => food.userId === wasteUserObject.id)
+                setFiltered(myPantry)
+            }
+        },
+        [searchTermState]
+    )
+
+    const sortByDate = () => {
+        fetch(`http://localhost:8088/foodInventory?userId=${wasteUserObject.id}`)
+            .then(response => response.json())
+            .then((foodData) => {
+                const foodDate = foodData.sort((a, b) => new Date(a.expiration) - new Date(b.expiration));
+                setFiltered(foodDate)
+            })
+
+    }
+
+    const deleteButton = (foodId) => {
+        fetch(`http://localhost:8088/foodInventory/${foodId}`, {
+            method: "DELETE"
+        })
+            .then(() => {
+                foodInventoryArray()
+            })
+
+    }
 
 
     return <>
 
         <button onClick={() => navigate("/food/addnew")}>Add New Item</button>
+        <button onClick={sortByDate}>Sort by Expiration</button>
 
 
 

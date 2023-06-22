@@ -24,24 +24,22 @@ export const NewFoodForm = () => {
         const itemToSend = {
             userId: wasteUserObject.id,
             name: food.name,
-            typeId: +food.typeId,
+            typeId: food.typeId,
             expiration: food.expiration
         }
-        itemToSend.userId = wasteUserObject.id;
-        if (wasteUserObject.id !== 0 && food.typeId !== 0 && food.name !== "" && food.expiration !== "")
 
-            // TODO: Perform the fetch() to POST the object to the API
-            return fetch(`http://localhost:8088/foodInventory`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(itemToSend)
+        // TODO: Perform the fetch() to POST the object to the API
+        return fetch(`http://localhost:8088/foodInventory`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(itemToSend)
+        })
+            .then(response => response.json())
+            .then(() => {
+                navigate("/food")
             })
-                .then(response => response.json())
-                .then(() => {
-                    navigate("/food")
-                })
     }
 
     useEffect(
