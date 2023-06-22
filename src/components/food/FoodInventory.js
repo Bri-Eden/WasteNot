@@ -16,6 +16,24 @@ export const FoodInventory = ({ searchTermState }) => {
     //convert retrieved string to object
     const wasteUserObject = JSON.parse(localWasteUser)
 
+    const foodInventoryArray = () => {
+        fetch(`http://localhost:8088/foodInventory`)
+            .then(response => response.json())
+            .then((foodArray) => {
+                setFood(foodArray)
+            })
+    }
+
+    const deleteButton = (foodId) => {
+        fetch(`http://localhost:8088/foodInventory/${foodId}`, {
+            method: "DELETE"
+        })
+            .then(() => {
+                foodInventoryArray()
+            })
+
+    }
+
     useEffect(
         () => {
             if (searchTermState) {
@@ -32,11 +50,7 @@ export const FoodInventory = ({ searchTermState }) => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/foodInventory`)
-                .then(response => response.json())
-                .then((foodArray) => {
-                    setFood(foodArray)
-                })// View the initial state of tickets
+            foodInventoryArray()
         },
         [] // When this array is empty, you are observing initial component state
     )
@@ -77,6 +91,9 @@ export const FoodInventory = ({ searchTermState }) => {
                             <div>
                                 <Link className="edit-btn" to={`/food/edit/${food.id}`}>Edit Item</Link>
 
+                            </div>
+                            <div>
+                                <button onClick={() => deleteButton(food.id)}>Delete Item</button>
                             </div>
                         </section>
                         </>

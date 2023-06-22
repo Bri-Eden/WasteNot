@@ -4,6 +4,7 @@ import { RecipesList } from "../recipes/Recipes"
 import { NewRecipeForm } from "../recipes/AddNewRecipeForm"
 import { FoodContainer } from "../food/FoodContainer"
 import { InventoryEdit } from "../food/InventoryEdits"
+import { RecipeEdit } from "../recipes/RecipeListEdits"
 
 export const ApplicationViews = () => {
 	return (
@@ -27,6 +28,8 @@ export const ApplicationViews = () => {
 				<Route path="recipes" element={<RecipesList />} />
 
 				<Route path="recipes/addnew" element={<NewRecipeForm />} />
+
+				<Route path="recipes/edit/:recipeId" element={<RecipeEdit />} />
 
 			</Route>
 		</Routes>

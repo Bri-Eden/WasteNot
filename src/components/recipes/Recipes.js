@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link, useParams } from "react-router-dom"
 
 export const RecipesList = () => {
     const [recipe, setRecipe] = useState([])
     const [filteredRecipe, setFiltered] = useState([])
+    const { recipeId } = useParams()
 
     const navigate = useNavigate()
     //const [filteredFood, setFiltered] = useState([])
@@ -53,6 +54,9 @@ export const RecipesList = () => {
                             <header>{recipe.name}</header>
                             <footer>{recipe.ingredients}</footer>
                             <footer>{recipe.instructions}</footer>
+                            <div>
+                                <Link className="edit-btn" to={`/recipes/edit/${recipe.id}`}>Edit Item</Link>
+                            </div>
                         </section>
                     }
                 )
